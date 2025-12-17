@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ЛР4 — Інтерактивний тест JavaScript</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <!-- HEADER: група + ПІБ студента, тема варіанту ВЕЛИКИМИ ЛІТЕРАМИ -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-grid">
+        <div>
+          <div class="label">Група, ПІБ студента</div>
+          <!-- Можеш змінити тут свої дані -->
+          <div class="value" id="studentInfo">ІО-01 — Корольова Андрій Валентинович</div>
+        </div>
+        <div>
+          <div class="label">Тема варіанту</div>
+          <!-- Можеш змінити на свою тему з таблиці варіантів -->
+          <div class="topic" id="variantTopic">DOM: ОБРОБКА ПОДІЙ ТА ДЕЛЕГУВАННЯ</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Стартовий блок: форма ім'я+група з валідацією -->
+    <section class="card" id="startScreen">
+      <h1>Інтерактивний тест з JavaScript</h1>
+      <p class="muted">
+        Введіть ваші дані, оберіть рівень складності та починайте тест.
+      </p>
+
+      <form id="startForm" novalidate>
+        <div class="form-grid">
+          <div class="field">
+            <label for="userName">Імʼя (ПІБ) *</label>
+            <input id="userName" name="userName" type="text" required minlength="3"
+                   placeholder="Напр.: Євгенія Іваненко" />
+            <small class="error" data-error-for="userName"></small>
+          </div>
+
+          <div class="field">
+            <label for="userGroup">Група *</label>
+            <input id="userGroup" name="userGroup" type="text" required
+                   pattern="^[A-Za-zА-Яа-яІіЇїЄєҐґ0-9\-]{2,10}$"
+                   placeholder="Напр.: ІО-01" />
+            <small class="error" data-error-for="userGroup"></small>
+          </div>
+
+          <div class="field">
+            <label for="level">Рівень *</label>
+            <select id="level" name="level" required>
+              <option value="">Оберіть рівень</option>
+              <option value="easy">Початковий</option>
+              <option value="medium">Середній</option>
+              <option value="hard">Складний</option>
+            </select>
+            <small class="error" data-error-for="level"></small>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn primary" type="submit">Почати тест</button>
+          <button class="btn" type="button" id="showHistoryBtn">Історія результатів</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Екран тесту -->
+    <section class="card hidden" id="quizScreen">
+      <div class="quiz-top">
+        <div>
+          <div class="muted" id="welcomeLine"></div>
+          <h2 id="quizTitle">Тест</h2>
+        </div>
+        <div class="status">
+          <div><span class="muted">Питання:</span> <b id="qCounter">1/10</b></div>
+          <div><span class="muted">Бали:</span> <b id="scoreLive">0</b></div>
+          <div><span class="muted">Рівень:</span> <b id="levelLive">—</b></div>
+        </div>
+      </div>
+
+      <div id="questionHost" class="question-host"><!-- сюди рендериться питання --></div>
+
+      <div class="actions">
+        <button class="btn" id="prevBtn" type="button">Назад</button>
+        <button class="btn primary" id="nextBtn" type="button">Далі</button>
+        <button class="btn danger" id="finishBtn" type="button">Завершити</button>
+      </div>
+    </section>
+
+    <!-- Екран результатів -->
+    <section class="card hidden" id="resultScreen">
+      <h2>Результат</h2>
+      <p id="resultLine" class="result-line"></p>
+
+      <div class="split">
+        <div>
+          <h3>Деталі</h3>
+          <ul id="detailsList" class="details"></ul>
+        </div>
+        <div>
+          <h3>Рекорд/Історія</h3>
+          <div id="historyBox" class="history"></div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn primary" id="restartBtn" type="button">Пройти ще раз</button>
+        <button class="btn" id="backToStartBtn" type="button">На головну</button>
+        <button class="btn danger" id="clearHistoryBtn" type="button">Очистити історію</button>
+      </div>
+    </section>
+
+    <!-- Модалка історії -->
+    <div class="modal hidden" id="historyModal" aria-hidden="true">
+      <div class="modal-card">
+        <div class="modal-head">
+          <h3>Історія результатів</h3>
+          <button class="icon-btn" id="closeHistory" type="button" aria-label="Close">✕</button>
+        </div>
+        <div id="historyModalBody" class="modal-body"></div>
+      </div>
+      <div class="modal-backdrop" id="modalBackdrop"></div>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container muted">
+      ЛР4 — DOM, події, валідація форм, Drag & Drop, localStorage
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
